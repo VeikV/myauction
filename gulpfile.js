@@ -4,16 +4,18 @@ var path = require('path');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var swig = require('gulp-swig');
- 
+
 gulp.task('sass', function () {
  return gulp.src('./src/**/*.scss')
   .pipe(sourcemaps.init())
+  .pipe(autoprefixer())
   .pipe(sass().on('error', sass.logError))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('./build'));
