@@ -21,8 +21,9 @@ gulp.task('compress', function() {
     .pipe(gulp.dest('./build/'));
 });
  
-gulp.task('sass:watch', function () {
+gulp.task('watch', function () {
   gulp.watch('./src/**/*.scss', ['sass']);
+  gulp.watch('./src/**/*.js', ['compress']);
 });
 
-gulp.task('default', ['sass', 'sass:watch'])
+gulp.task('default', ['sass', 'compress' 'watch']);
