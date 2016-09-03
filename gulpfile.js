@@ -9,6 +9,7 @@ var concat = require('gulp-concat');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var swig = require('gulp-swig');
  
 gulp.task('sass', function () {
  return gulp.src('./src/**/*.scss')
@@ -57,12 +58,19 @@ gulp.task('templates', function() {
     .pipe(concat('temlates.js'))
     .pipe(gulp.dest('build/'));
 });
+
+gulp.task('swig', function() {
+  gulp.src('./src/index.html')
+    .pipe(swig({defaults: { cache: false }}))
+    .pipe(gulp.dest('build/'))
+});
  
 gulp.task('watch', function () {
   gulp.watch('./src/**/*.scss', ['sass']);
   gulp.watch('./src/**/*.js', ['compress']);
   gulp.watch('./src/**/*.hbs', ['templates']);
+  gulp.watch('./src/**/*.html', ['swig']);
 
 });
 
-gulp.task('default', ['sass', 'compress', 'templates', 'watch']);
+gulp.task('default', ['sass', 'compress', 'templates', 'swig' 'watch']);
