@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
+var merge = require('merge-stream');
 var declare = require('gulp-declare');
 var swig = require('gulp-swig');
 
@@ -56,15 +57,15 @@ gulp.task('templates', function() {
     }))
 
     //Output both the partials and the templates as build/js/templates.js
-    return merge(partials, temlates)
-    .pipe(concat('temlates.js'))
+    return merge(partials, templates)
+    .pipe(concat('templates.js'))
     .pipe(gulp.dest('build/'));
 });
 
 gulp.task('swig', function() {
   gulp.src('./src/index.html')
     .pipe(swig({defaults: { cache: false }}))
-    .pipe(gulp.dest('build/'))
+    .pipe(gulp.dest('build/'));
 });
  
 gulp.task('watch', function () {
@@ -75,4 +76,4 @@ gulp.task('watch', function () {
 
 });
 
-gulp.task('default', ['sass', 'compress', 'templates', 'swig' 'watch']);
+gulp.task('default', ['sass', 'compress', 'templates', 'swig', 'watch']);

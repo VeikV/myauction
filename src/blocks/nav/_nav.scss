@@ -1,0 +1,8 @@
+.nav {
+
+}
+
+.nav__list {
+	@extend .menu;
+	@extend .align-right;
+}
