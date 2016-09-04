@@ -1,0 +1,24 @@
+{
+	"items": [
+		{
+			"title": "Product1",
+			"category": "Shoes",
+			"price": 12,
+			"corrency": "USD",
+			"image": "../src/images/img1.jpg",
+			"special": true,
+			"color": "red"
+		},
+
+		{ 
+			"title": "Product2",
+			"category": "man",
+			"price": 23,
+			"corrency": "USD",
+			"image": "../src/images/img1.jpg",
+			"special": true,
+			"color": "green"
+
+		}
+	]
+}
