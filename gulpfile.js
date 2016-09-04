@@ -46,15 +46,15 @@ gulp.task('templates', function() {
       }
     }));
 
-    var templates =  gulp.src('./src/**/*.hbs')
+    var templates =  gulp.src('src/**/[^_]*.hbs')
     .pipe(handlebars({
     	handlebars: require('handlebars')
     }))
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
-      namespace: 'Myauction',
-      noRedeclare: true, // Avoid duplicate declarations 
-    }))
+      namespace: 'App.templates',
+      noRedeclare: true // Avoid duplicate declarations 
+    }));
 
     //Output both the partials and the templates as build/js/templates.js
     return merge(partials, templates)

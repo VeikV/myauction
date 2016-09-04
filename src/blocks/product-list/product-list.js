@@ -29,24 +29,30 @@ App.classes.ProductList.prototype.getProducts = function() {
 	var _this = this; //сохраняем контекст в переменную, потому что в аяксе this будет ссылаться не на instance, а на ajax объект
 
 	$.ajax({
-		url: '/myauction/services/products.json',
+		url: '/Myauction/services/products.json',
 		dataType: 'json',
 		method: 'GET',
 		success: function(data) {
 			_this.render(data);
 		},
 		error: function(jqXHR) {
-			_this.render(jqXHR);
+			_this.render(jqXHR, true);
 
 		}
 	});
 };
 
-App.classes.ProductList.prototype.render = function(data) {
+App.classes.ProductList.prototype.render = function(data, isError) {
+	var template;
 
-
+	if (isError) {//если isError будет true, то будет выполняться это, если нет, то другая часть услоной конструкции
+		template = App.templates.error(data);// здесь используется hbs шаблон error
+		this.elements.$root.html(template);//html метод jquery объекта. Он вставляет, как html переданный ему параметр
+	} else {
+		template = App.templates['product-list'](data);
+		this.elements.$root.html(template);
+	}
 };
-
 
 ;(function() {
 	var elements = $('.product-list'); //jquery объект, который содержит коллекцию из .product-list. elements массив из элементов с переданным селектором, который возвращается методом $
