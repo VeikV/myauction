@@ -1,0 +1,23 @@
+.promo {
+	@include flex-grid-row;
+	padding-top: 35px;
+}
+
+.promo__hgroup {
+	text-transform: uppercase;
+}
+
+.promo__title {
+	color: #3f3f3f
+}
+
+.promo__description {
+	color: #9b9b9b;
+}
+
+.promo__description_line {
+	border-bottom: 1px solid $medium-gray;
+	padding-bottom: 5px;
+}
+
+
