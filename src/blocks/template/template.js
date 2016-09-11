@@ -15,15 +15,3 @@ App.classes.Template = function(element) { //описываем ф-цию кон
 App.classes.Template.prototype.init = function() {//запись в прототип этого метода
 
 }
-
-;(function() {
-	var elements = $('.template'); //jquery объект, который содержит коллекцию из .product-list. elements массив из элементов с переданным селектором, который возвращается методом $
-	console.log($('.template'));
-	console.log(document.getElementsByClassName('template'));
-	App.instances['template'] = []; //создаем св-во(удобное название), присваиваем ему пустой массив
-
-	for(var i = 0; i < elements.length; i++) {//elements.length - длинна массива, перебирам массив элементс с помощью цикла, кот. запускаем столько раз, сколь эл-ов лежит в массиве
-		
-		App.instances['template'].push(new App.classes.Template(elements[i])); //в созданный массив пушим intance (на каждой иттерации новый). Инстанс мы создается функцией конструткором, вызванной с каждым элеметом массива
-	}
-})();
