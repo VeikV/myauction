@@ -1,0 +1,37 @@
+.product {
+	font-family: 'helveticaneuecyrroman', sans-serif;
+	display: inline-block;
+	position: relative;
+}
+
+.product__title {
+	font-size: 23px;
+	color: #3f3f3f;
+}
+
+.product__category {
+	font-family: 'helveticaneuecyrlight', sans-serif;
+	font-size: 13px;
+	color: #6f6f6f;
+	text-transform: uppercase;
+}
+
+.product__add-to-cart {
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	right: 10px;
+	bottom: 72px;
+	font-size: 30px;
+}
+
+.product__add-to-cart-link {
+	font-family: 'helveticaneuecyrlight', sans-serif;
+	color: #6f6f6f;
+}
+
+.product__price {
+	font-size: 17px;
+}
+
+

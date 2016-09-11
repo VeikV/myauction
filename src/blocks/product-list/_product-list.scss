@@ -1,0 +1,4 @@
+.product-list {
+	@include flex-grid-row;
+	@include flex-align(justify, middle);
+}

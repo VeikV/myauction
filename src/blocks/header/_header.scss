@@ -1,0 +1,10 @@
+.header {
+	@include flex-grid-row;
+	@include flex-align(justify, middle);
+	padding: 25px 0;
+	background: #fff;
+}
+
+.header__side_right {
+	@include flex;
+}

@@ -1,6 +1,8 @@
 <header class="header">
-	<div class="header__side"></div>
-	<div class="header__side header__side_search">{% include "../search/search.html" %}</div>
-	<div class="header__side header__side_nav">{% include "../nav/nav.html" %}</div>
-	
+	<div class="header__side">{% include "../logo/logo.html" %}</div>
+	<div class="header__side header__side_center">{% include "../nav/nav.html" %}</div>
+	<div class="header__side header__side_right">
+		{% include "../search/search.html" %}
+		{% include "../cart/cart.html" %}
+	</div>
 </header>

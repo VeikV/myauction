@@ -4,31 +4,93 @@
 	<title></title>
 </head>
 <body>
-<header class="header">
-	<div class="header__side"></div>
-	<div class="header__side header__side_search"></div>
-	<div class="header__side header__side_nav"><nav class="nav">
+	<header class="header">
+	<div class="header__side"><div class="logo">
+	<img src="../src/images/logo.png" class="logo__image" alt="logo-image"/>
+</div></div>
+	<div class="header__side header__side_center"><nav class="nav">
  	<ul class="nav__list">
 		<li class="nav__item">
-			<a class="nav__item-link" href="#">Item1</a>
+			<a class="nav__item-link" href="#">Men</a>
 		</li>
 		<li class="nav__item">
-			<a class="nav__item-link" href="#">Item2</a>
+			<a class="nav__item-link" href="#">Presidents</a>
 		</li>
 		<li class="nav__item">
-			<a class="nav__item-link" href="#">Item3</a>
+			<a class="nav__item-link" href="#">Humanoids</a>
+		</li>
+		<li class="nav__item">
+			<a class="nav__item-link" href="#">5D creatures</a>
+		</li>
+		<li class="nav__item">
+			<a class="nav__item-link" href="#contact">Contacts</a>
 		</li>
 	</ul>
 </nav></div>
-	
-</header>
-	<div class="main">
-		<div class="product-list"></div>
-	
+	<div class="header__side header__side_right">
+		<div class="search search_header">
+	<form action="" method="get" class="search__form">
+		<div class="search__input">
+			<input type="text" class="search__control" name="s" placeholder="Search..." value="">
+		</div>
+		<a href="#" class="search__btn">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+				<path id="search-svg" d="M460.355,421.59L353.844,315.078c20.041-27.553,31.885-61.437,31.885-98.037
+					C385.729,124.934,310.793,50,218.686,50C126.58,50,51.645,124.934,51.645,217.041c0,92.106,74.936,167.041,167.041,167.041
+					c34.912,0,67.352-10.773,94.184-29.158L419.945,462L460.355,421.59z M100.631,217.041c0-65.096,52.959-118.056,118.055-118.056
+					c65.098,0,118.057,52.959,118.057,118.056c0,65.096-52.959,118.056-118.057,118.056C153.59,335.097,100.631,282.137,100.631,217.041z">
+				</path>
+			</svg>
+			<span class="sr-only">Search</span>
+		</a>
+	</form>
+</div>
+
+
+		<div class="cart">
+	<div cclass="cart__image"><img src="../src/images/cart.png"/></div>
+</div>
 	</div>
+</header>
+	<div class="main"></div>
+	<footer class="footer">
+	<div class="footer__content">
+		<div class="footer__content-item">
+			<div class="footer__content-item-text">Copyright &copy; 2095 - Gfashion</div>
+			<div class="footer-menu">
+				<ul>
+					<li class="footer-menu__item">
+						<a  class="footer-menu__item-link" href="#">Privacy &amp; Cookies /</a>
+					</li>
+					<li class="footer-menu__item">
+						<a  class="footer-menu__item-link" href="#">Terms &amp; Conditions /</a>
+					</li>
+					<li class="footer-menu__item">
+						<a class="footer-menu__item-link" href="#">Accessibility /</a>
+					</li>
+					<li class="footer-menu__item">
+						<a  class="footer-menu__item-link" href="#">Store /</a>
+					</li>
+					<li class="footer-menu__item">
+						<a  class="footer-menu__item-link" href="#">About Us /</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer__content-item footer__content-item_right">
+			<img src="../src/images/payment6.png" class="payment"/>
+			<!--<img src="../src/images/payment2.png" class="payment"/>
+			<img src="../src/images/payment3.png" class="payment"/>
+			<img src="../src/images/payment4.png" class="payment"/>
+			<img src="../src/images/payment5.png" class="payment"/>-->
+		</div>
+	</div>
+</footer>
+
 <link rel="stylesheet" href="app.css">
 <script src="./../libs/handlebars-v4.0.5.js"></script>
 <script src="./../libs/jquery-3.1.0.min.js"></script>
+<script src="./../libs/jquery.router.js"></script>
 <script src="../build/templates.js"></script>
 <script src="../build/app.js"></script>
 

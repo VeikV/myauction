@@ -25,7 +25,7 @@ gulp.task('sass', function () {
 gulp.task('compress', function() {
   return gulp.src('./src/**/*.js')
     .pipe(concat('app.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('./build'));
 });
 

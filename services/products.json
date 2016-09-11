@@ -1,22 +1,74 @@
 {
 	"items": [
 		{
-			"title": "Product1",
+			"title": "Rusty",
 			"category": "Shoes",
 			"price": 12,
-			"corrency": "USD",
-			"image": "../src/images/img1.jpg",
+			"currency": "$",
+			"image": "../src/images/product1.png",
 			"special": true,
 			"color": "red"
 		},
 
 		{ 
-			"title": "Product2",
-			"category": "man",
+			"title": "Dusty",
+			"category": "T-shirts",
 			"price": 23,
-			"corrency": "USD",
-			"image": "../src/images/img1.jpg",
+			"currency": "$",
+			"image": "../src/images/product1.png",
 			"special": true,
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Pants",
+			"price": 233,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"special": true,
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Skirts",
+			"price": 193,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"special": true,
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Coats",
+			"price": 673,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Glasses",
+			"price": 23,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Bra",
+			"price": 23,
+			"currency": "$",
+			"image": "../src/images/product1.png",
 			"color": "green"
 
 		}

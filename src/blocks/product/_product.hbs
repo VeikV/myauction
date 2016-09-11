@@ -1,24 +1,16 @@
 <div class="product">
   <div class="product__img">
-    <div class="product__img-link"><img src="" alt="There was an item image"></div>
+    <div class="product__img-link"><img src="{{image}}" alt="There was an item image"></div>
   </div>
-
-  <div class="product__label">Label</div>
-
   <div class="product__title">
-    <div class="product__title-link">Title</div>
+    <div class="product__title-link">{{title}}</div>
   </div>
-
   <div class="product__category">
-    <div class="product__category-link">Shoes</div>
+    <div class="product__category-link">{{category}}</div>
   </div>
-
-  <div classs="product__add-to-cart">
-    <a class product__add-to-cart-link>Add to cart</a>
+  <div class="product__add-to-cart">
+    <a class="product__add-to-cart-link">+</a>
   </div>
-
-
-
- <div class="product__price">2$</div>
+  <div class="product__price">{{currency}}{{price}}</div>
   </div>
 </div>
