@@ -1,0 +1,119 @@
+.contact {
+	width: $global-width;
+	margin-left: auto;
+	margin-right: auto;
+}
+.contact__title {
+	font-family: 'helveticaneuecyrmedium', sans-serif;
+	color: #3f3f3f;
+	font-size: 36px;
+}
+
+.form__wrapper {
+	@include flex-grid-row;
+}
+
+.form__label {
+	font-family: 'helveticaneuecyrbold', sans-serif;
+	color: #3f3f3f;
+	font-size: 16px;
+}
+
+.form__input::-webkit-input-placeholder {
+  font-family: 'helveticaneuecyrroman', sans-serif;
+  color: #afafaf;
+  font-size: 16px;
+}
+
+.form__input {
+	border-color: rgb(238, 238, 238)!important;
+	background-color: #fff!important;
+	box-shadow: none!important;
+}
+
+.form__input::-moz-placeholder {
+  font-family: 'helveticaneuecyrroman', sans-serif;
+  color: #afafaf;
+  font-size: 16px;
+}
+
+.form__textarea {
+	height: 100%;
+}
+
+.form__col {
+	@include flex-grid-column(6, 0);
+}
+
+.contact-map {
+	background: url(../src/images/map.png);
+	background-size: cover;
+	position: relative;
+	width: 100%;
+	height: 50%;
+	min-height: 500px;
+	padding-top: 60px;
+}
+
+.connect {
+	background: #fff;
+	@include absolute-center;
+	padding: 2.5em 1.25em;
+	max-width: 100%;
+	min-width: 500px;
+}
+.connect-block {
+	@include flex-grid-row;
+	@include flex-align(space-between, stretch);
+	width: 100%;
+}
+
+.contact__location-name {
+	width: 100%;
+
+	&:before {
+		content: "";
+		display: inline-block;
+		background: url(../src/images/pin.png);
+		background-size: 14px 20px;
+		width: 14px;
+		height: 20px;
+	}
+}
+
+.connect__contacts-item_call {
+	width: 100%;
+
+	&:before {
+		content: "";
+		display: inline-block;
+		background: url(../src/images/phone-icon.png);
+		background-size: 20px 20px;
+		width: 20px;
+		height: 20px;
+	}
+}
+
+.connect__contacts-item_holo {
+
+	&:before {
+		content: "";
+		display: inline-block;
+		background: url(../src/images/holo-icon.png);
+		background-size: 20px 20px;
+		width: 20px;
+		height: 20px;
+	}
+}
+
+.contact-map__nav {
+	width: $global-width;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.contact-map__nav div {
+	@include flex-grid-row;
+	@include flex-grid-column-align(middle);
+}
+
