@@ -1,0 +1,22 @@
+.slider-promo {
+	position: relative;
+}
+
+.slider-promo__nav {
+	position: absolute;
+	width: 38px;
+    height: 71px;
+    z-index: 10000;
+    top: 50%;
+    margin-top: -25px;
+}
+
+.slider-promo__nav_next {
+	background: url(../src/images/arrow-next.png);
+	right: 20px;
+
+}
+.slider-promo__nav_prev {
+	background: url(../src/images/arrow-previous.png);
+	left: 20px;
+}
