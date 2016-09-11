@@ -1,0 +1,28 @@
+.footer {
+	background: #222222;
+	padding: 60px 0;
+	color: #fff;
+
+}
+.footer__content {
+	@include flex-grid-row;
+	@include flex-align(space-between, stretch);
+	opacity: .5;
+}
+
+.footer__content-item-text {
+	font-size: 15px;
+	font-family: 'helveticaneuecyrthin', sans-serif;
+}
+
+.footer-menu ul {
+	@extend .menu;
+	font-size: 13px;
+}
+
+.footer-menu__item-link {
+	color: #fff;
+	padding: 0 5px 0 0!important;
+	font-family: 'helveticaneuecyrultralight', sans-serif;
+	font-size: 13px;
+}
