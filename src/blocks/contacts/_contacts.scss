@@ -64,7 +64,7 @@
 }
 .connect-block {
 	@include flex-grid-row;
-	@include flex-align(space-between, stretch);
+	@include flex-align(spaced, stretch);
 	width: 100%;
 }
 
@@ -114,6 +114,5 @@
 
 .contact-map__nav div {
 	@include flex-grid-row;
-	@include flex-grid-column-align(middle);
 }
 

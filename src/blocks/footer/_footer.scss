@@ -6,7 +6,7 @@
 }
 .footer__content {
 	@include flex-grid-row;
-	@include flex-align(space-between, stretch);
+	@include flex-align(spaced, stretch);
 	opacity: .5;
 }
 

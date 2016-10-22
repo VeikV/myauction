@@ -53,15 +53,3 @@ App.classes.ProductList.prototype.render = function(data, isError) {
 		this.elements.$root.html(template);
 	}
 };
-
-// ;(function() {
-// 	var elements = $('.product-list'); //jquery объект, который содержит коллекцию из .product-list. elements массив из элементов с переданным селектором, который возвращается методом $
-// 	//console.log($('.product-list'));
-// 	//console.log(document.getElementsByClassName('product-list'));
-// 	App.instances['product-lists'] = []; //создаем св-во(удобное название), присваиваем ему пустой массив
-
-// 	for(var i = 0; i < elements.length; i++) {//elements.length - длинна массива, перебирам массив элементс с помощью цикла, кот. запускаем столько раз, сколь эл-ов лежит в массиве
-		
-// 		App.instances['product-lists'].push(new App.classes.ProductList(elements[i])); //в созданный массив пушим intance (на каждой иттерации новый). Инстанс мы создается функцией конструткором, вызванной с каждым элеметом массива
-// 	}
-// })();

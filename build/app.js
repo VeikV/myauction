@@ -9,10 +9,18 @@ setTimeout(function() {//создает ассинхронный поток ко
 		init();//вызываем ф-цию init для того, что бы отработал код ниже.
 	});
 
+	$.router.add('/myauction/build/contacts', function() {
+		var html = App.templates['contacts']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+
+		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		init();
+	});
+
 	$.router.go('/myauction/build/');//пишем для перехода по ссылке
 //здесь будут создаваться именно инстансы для каждого класса(функция конструктор и ее прототип) приложенияб
 	function init() {//инициализация всех компонетов
 		var components = $('[data-components]');//получаем массив эл-ов у которых есть дата атрибут data-components. $ возвращает объект в свойствах которого есть кол-ция дом элементов с дата атибутом data-components
+	
 		$.each(components, function(index, node) {
 			var modules = node.dataset.components;//смотрим значение дата-атрибута с именем компонетс
 
@@ -28,6 +36,81 @@ setTimeout(function() {//создает ассинхронный поток ко
 		})
 	}
 }, 0);//выполнится, через указанное кол-во милсек после выполнения синхронного кода
+var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+
+App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+
+App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
+
+
+App.classes.Contacts = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
+	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
+	//console.log(element);
+	//console.log($root);
+	//this ссылка на instance(объект созданный на основе функции конструткор)
+	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
+	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
+		$root: $root //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
+	};
+	//console.log(this.elements.$root);
+	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
+//instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
+};
+//метод init используется для того, чтобы вызывать другие методы 
+App.classes.Contacts.prototype.init = function() {//запись в прототип этого метода
+
+}
+var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+
+App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+
+App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
+
+
+App.classes.Nav = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
+	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
+	//console.log(element);
+	//console.log($root);
+	//this ссылка на instance(объект созданный на основе функции конструткор)
+	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
+	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
+		$root: $root,
+		$link: $root.find('.nav__item-link'),
+	};
+
+	this.url = '/myauction/build/';
+
+	this.attachEvents();
+	//console.log(this.elements.$root);
+	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
+//instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
+};
+//метод init используется для того, чтобы вызывать другие методы 
+App.classes.Nav.prototype.init = function() {//запись в прототип этого метода
+};
+
+App.classes.Nav.prototype.attachEvents = function() {
+	this.elements.$root.on('click', this.elements.$link, this.getUrl.bind(this));//В руте при клике на этот эл-нт вызывается этот метод
+};
+
+App.classes.Nav.prototype.getUrl = function(event) {
+	event.preventDefault();
+
+	var $current = $(event.target);
+	var id = $current.attr('id');
+	var currentUrl = this.url + id;
+
+	this.go(currentUrl);
+};
+
+App.classes.Nav.prototype.go = function(currentUrl) {
+	$.router.go(currentUrl);
+};
+
+
+
+
+
 
 var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
 
@@ -84,18 +167,6 @@ App.classes.ProductList.prototype.render = function(data, isError) {
 		this.elements.$root.html(template);
 	}
 };
-
-// ;(function() {
-// 	var elements = $('.product-list'); //jquery объект, который содержит коллекцию из .product-list. elements массив из элементов с переданным селектором, который возвращается методом $
-// 	//console.log($('.product-list'));
-// 	//console.log(document.getElementsByClassName('product-list'));
-// 	App.instances['product-lists'] = []; //создаем св-во(удобное название), присваиваем ему пустой массив
-
-// 	for(var i = 0; i < elements.length; i++) {//elements.length - длинна массива, перебирам массив элементс с помощью цикла, кот. запускаем столько раз, сколь эл-ов лежит в массиве
-		
-// 		App.instances['product-lists'].push(new App.classes.ProductList(elements[i])); //в созданный массив пушим intance (на каждой иттерации новый). Инстанс мы создается функцией конструткором, вызванной с каждым элеметом массива
-// 	}
-// })();
 
 App.classes.Template = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
