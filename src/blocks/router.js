@@ -16,6 +16,19 @@ setTimeout(function() {//создает ассинхронный поток ко
 		init();
 	});
 
+	var category;
+
+	$('.nav__item-link_category').each(function(index, item) {
+		category = $(item).attr('data-id');
+
+	$.router.add('/myauction/build/' + category, function() {
+		var html = App.templates['plp']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+
+		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		init();
+	});
+	});
+
 	$.router.go('/myauction/build/');//пишем для перехода по ссылке
 //здесь будут создаваться именно инстансы для каждого класса(функция конструктор и ее прототип) приложенияб
 	function init() {//инициализация всех компонетов

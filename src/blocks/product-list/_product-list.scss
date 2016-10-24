@@ -1,4 +1,18 @@
-.product-list {
-	@include flex-grid-row;
-	@include flex-align(justify, middle);
+.category-page {
+	width: $global-width;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.category-page__title {
+	font-size: 41px;
+	text-transform: uppercase;
+	color: #3f3f3f;
+}
+
+.category-page__result {
+	font-size: 16px;
+	text-transform: uppercase;
+	color: #9b9b9b;
+	padding-bottom: 5px;
 }

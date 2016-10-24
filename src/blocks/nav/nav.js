@@ -13,7 +13,7 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
 		$root: $root,
-		$link: $root.find('.nav__item-link'),
+		$link: $root.find('.nav__item-link')
 	};
 
 	this.url = '/myauction/build/';
@@ -25,7 +25,17 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.Nav.prototype.init = function() {//запись в прототип этого метода
+	// this.setDataAttributes();
 };
+
+// App.classes.Nav.prototype.setDataAttributes = function() {
+// 	var dataCategory;
+
+// 	this.elements.$category.each(function(index, item) {
+// 		dataCategory = $(item).text().toLowerCase().split(' ').join('');
+// 		$(item).attr('data-category', dataCategory);
+// 	});
+// };
 
 App.classes.Nav.prototype.attachEvents = function() {
 	this.elements.$root.on('click', this.elements.$link, this.getUrl.bind(this));//В руте при клике на этот эл-нт вызывается этот метод
@@ -35,7 +45,7 @@ App.classes.Nav.prototype.getUrl = function(event) {
 	event.preventDefault();
 
 	var $current = $(event.target);
-	var id = $current.attr('id');
+	var id = $current.data('id');
 	var currentUrl = this.url + id;
 
 	this.go(currentUrl);
