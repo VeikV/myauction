@@ -41,7 +41,15 @@ setTimeout(function() {//создает ассинхронный поток ко
 				App.instances[module] = App.instances[module] || [];
 
 				if (App.classes[module]) {
-					App.instances[module].push(new App.classes[module](node));
+					var hasInstance = !!$.data(node, module);
+
+					if (!hasInstance) {
+						var instance = new App.classes[module](node);
+
+						$.data(node, module, instance);
+
+						App.instances[module].push(instance);
+					}
 				} else {
 					throw new Error('Module ' + module + ' does not exist.');
 				}

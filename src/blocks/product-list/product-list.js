@@ -3,7 +3,7 @@ var App = App || {};//создаем глобальную переменную. 
 App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
 
 App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
-
+App.data = {};
 
 App.classes.ProductList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
@@ -13,23 +13,21 @@ App.classes.ProductList = function(element) { //описываем ф-цию к�
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
 		$root: $root,//в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
-		$navItem: $('[data-category]'),
+		$navItem: $('[data-id]'),
 		$window: $(window)
 	};
 
-	this.category = null;
+	this.category = App.instances.Nav[0].category;
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
 //instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
-	this.attachEvents();
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.ProductList.prototype.init = function() {//запись в прототип этого метода
-	this.getProducts();
-};
-
-App.classes.ProductList.prototype.attachEvents = function() {
-
-	this.elements.$window.on('click', this.elements.navItem, this.getCategory.bind(this));
+	if (!App.data.products) {
+		this.getProducts();
+	} else {
+		this.getCurrentProducts(App.data.products);
+	}
 };
 
 App.classes.ProductList.prototype.getCategory = function(event) {
@@ -45,6 +43,7 @@ App.classes.ProductList.prototype.getProducts = function() {
 		dataType: 'json',
 		method: 'GET',
 		success: function(data) {
+			App.data.products = data;
 			_this.getCurrentProducts(data);
 		},
 		error: function(jqXHR) {
@@ -54,20 +53,18 @@ App.classes.ProductList.prototype.getProducts = function() {
 };
 
 App.classes.ProductList.prototype.getCurrentProducts = function(data) {
-	this.data = data;
 	var _this = this;
 
-	var data = {};
+	var filtered = {};
 
-	data.items = this.data.items.filter(function(product) {
-		console.log(product.category, _this.category);
+	filtered.items = data.items.filter(function(product) {
 		return product.category.toLowerCase() == _this.category.toLowerCase();
 	});
 
-	if(data.items.length) {
-		this.render(data);
+	if (filtered.items.length) {
+		this.render(filtered);
 	} else {
-		this.render(data, false, true);
+		this.render(filtered, false, true);
 	}
 };
 

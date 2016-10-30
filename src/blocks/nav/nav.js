@@ -17,6 +17,7 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 	};
 
 	this.url = '/myauction/build/';
+	this.category = null;
 
 	this.attachEvents();
 	//console.log(this.elements.$root);
@@ -25,17 +26,7 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.Nav.prototype.init = function() {//запись в прототип этого метода
-	// this.setDataAttributes();
 };
-
-// App.classes.Nav.prototype.setDataAttributes = function() {
-// 	var dataCategory;
-
-// 	this.elements.$category.each(function(index, item) {
-// 		dataCategory = $(item).text().toLowerCase().split(' ').join('');
-// 		$(item).attr('data-category', dataCategory);
-// 	});
-// };
 
 App.classes.Nav.prototype.attachEvents = function() {
 	this.elements.$root.on('click', this.elements.$link, this.getUrl.bind(this));//В руте при клике на этот эл-нт вызывается этот метод
@@ -44,9 +35,11 @@ App.classes.Nav.prototype.attachEvents = function() {
 App.classes.Nav.prototype.getUrl = function(event) {
 	event.preventDefault();
 
-	var $current = $(event.target);
+	var $current = $(event.target).addClass('active');
 	var id = $current.data('id');
 	var currentUrl = this.url + id;
+
+	this.category = id;
 
 	this.go(currentUrl);
 };

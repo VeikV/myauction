@@ -3,6 +3,7 @@ var App = App || {};//создаем глобальную переменную. 
 App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
 
 App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
+App.data = {};
 
 //в App.classes будут храниться все классы, те классы это функции конструкторы и их прототипы
 
@@ -11,7 +12,8 @@ App.classes.SpecialList = function(element) { //описываем ф-цию к�
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
 		$root: $root,
-		$window: $(window) //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
+		$window: $(window)
+		 //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
 	};
 	//console.log(this.elements.$root);
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
@@ -19,7 +21,11 @@ App.classes.SpecialList = function(element) { //описываем ф-цию к�
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.SpecialList.prototype.init = function() {//запись в прототип этого метода
- 	this.getProducts();
+ 	if (!App.data.products) {
+ 		this.getProducts();
+ 	} else {
+ 		this.render(App.data.products);
+ 	}
 };
 
 App.classes.SpecialList.prototype.getProducts = function() {
@@ -31,8 +37,8 @@ App.classes.SpecialList.prototype.getProducts = function() {
 		dataType: 'json',
 		method: 'GET',
 		success: function(data) {
+			App.data.products = data;
 			_this.render(data);
-			// _this.elements.$window.trigger('getProducts', data);
 
 		},
 		error: function(jqXHR) {
@@ -52,45 +58,35 @@ App.classes.SpecialList.prototype.render = function(data, isError) {
 		template = App.templates['special-list'](data);
 		this.elements.$root.html(template);
 		this.carusel();
+		this.attachEvents();
+		this.elements.$root.find('.slick-arrow').fadeOut();
 	}
 };
 
 App.classes.SpecialList.prototype.carusel = function() {
 	this.elements.$root.slick({
-	  dots: true,
-	  infinite: false,
-	  speed: 300,
-	  slidesToShow: 4,
-	  slidesToScroll: 4,
-	  responsive: [
-	    {
-	      breakpoint: 1024,
-	      settings: {
-	        slidesToShow: 3,
-	        slidesToScroll: 3,
-	        infinite: true,
-	        dots: true
-	      }
-	    },
-	    {
-	      breakpoint: 600,
-	      settings: {
-	        slidesToShow: 2,
-	        slidesToScroll: 2
-	      }
-	    },
-	    {
-	      breakpoint: 480,
-	      settings: {
-	        slidesToShow: 1,
-	        slidesToScroll: 1
-	      }
-	    }
-	    // You can unslick at a given breakpoint now by adding:
-	    // settings: "unslick"
-	    // instead of a settings object
-	  ]
+	 lazyLoad: 'ondemand',
+	 slidesToShow: 4,
+	 slidesToScroll: 1
 	});
-}
+};
+
+App.classes.SpecialList.prototype.attachEvents = function() {
+	this.elements.$root.on('mouseenter mouseleave', this.fadeOut.bind(this));
+};
+
+App.classes.SpecialList.prototype.fadeOut = function() {
+	this.elements.$root.find('.slick-arrow').fadeToggle();
+};
+
+
+
+
+
+
+
+
+
+
 
 

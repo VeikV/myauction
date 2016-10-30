@@ -1,0 +1,45 @@
+.slick-dots {
+	display: none!important;
+}
+
+.special-list {
+	margin-top: 20px;
+    width: $global-width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slick-arrow {
+	display: block;
+	position: absolute;
+	top: 45%;
+	background: #222 url(../src/images/arrow-left-white.svg) no-repeat center center;
+	text-indent: -9999px;
+    background-position: 40% center;
+    margin-top: -40px;
+    background-size: 25px;
+    background-clip: padding-box;
+    border-radius: 50%!important;
+    width: 40px;
+    height: 40px;
+    z-index: 998;
+    outline: none;
+}
+
+.slick-prev {
+	z-index: 998;
+    left: -15px;
+}
+
+.slick-next {
+	right: 15px;
+	z-index: 998;
+	transform: rotate(180deg);
+}
+
+.slick-track {
+	z-index: 996;
+}
+
+
+

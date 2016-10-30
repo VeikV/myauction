@@ -1,6 +1,6 @@
 .category-block {
 	@include flex-grid-row;
-	@include flex-align(spaced, stretch);
+	@include flex-align(justify, stretch);
 	padding-top: 35px;
 }
 

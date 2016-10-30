@@ -1,22 +1,14 @@
-.slider-promo {
-	position: relative;
+.unslider-nav {
+	display: none;
 }
 
-.slider-promo__nav {
-	position: absolute;
-	width: 38px;
-    height: 71px;
-    z-index: 10000;
-    top: 50%;
-    margin-top: -25px;
-}
-
-.slider-promo__nav_next {
-	background: url(../src/images/arrow-next.png);
-	right: 20px;
-
-}
-.slider-promo__nav_prev {
+.unslider-arrow {
 	background: url(../src/images/arrow-previous.png);
-	left: 20px;
+	width: 38px;
+	height: 71px;
+	top: 50%;
+}
+
+.unslider-arrow.next {
+	background: url(../src/images/arrow-next.png);
 }

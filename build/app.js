@@ -41,7 +41,15 @@ setTimeout(function() {//создает ассинхронный поток ко
 				App.instances[module] = App.instances[module] || [];
 
 				if (App.classes[module]) {
-					App.instances[module].push(new App.classes[module](node));
+					var hasInstance = !!$.data(node, module);
+
+					if (!hasInstance) {
+						var instance = new App.classes[module](node);
+
+						$.data(node, module, instance);
+
+						App.instances[module].push(instance);
+					}
 				} else {
 					throw new Error('Module ' + module + ' does not exist.');
 				}
@@ -92,6 +100,7 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 	};
 
 	this.url = '/myauction/build/';
+	this.category = null;
 
 	this.attachEvents();
 	//console.log(this.elements.$root);
@@ -100,17 +109,7 @@ App.classes.Nav = function(element) { //описываем ф-цию конст�
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.Nav.prototype.init = function() {//запись в прототип этого метода
-	// this.setDataAttributes();
 };
-
-// App.classes.Nav.prototype.setDataAttributes = function() {
-// 	var dataCategory;
-
-// 	this.elements.$category.each(function(index, item) {
-// 		dataCategory = $(item).text().toLowerCase().split(' ').join('');
-// 		$(item).attr('data-category', dataCategory);
-// 	});
-// };
 
 App.classes.Nav.prototype.attachEvents = function() {
 	this.elements.$root.on('click', this.elements.$link, this.getUrl.bind(this));//В руте при клике на этот эл-нт вызывается этот метод
@@ -119,9 +118,11 @@ App.classes.Nav.prototype.attachEvents = function() {
 App.classes.Nav.prototype.getUrl = function(event) {
 	event.preventDefault();
 
-	var $current = $(event.target);
+	var $current = $(event.target).addClass('active');
 	var id = $current.data('id');
 	var currentUrl = this.url + id;
+
+	this.category = id;
 
 	this.go(currentUrl);
 };
@@ -140,7 +141,7 @@ var App = App || {};//создаем глобальную переменную. 
 App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
 
 App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
-
+App.data = {};
 
 App.classes.ProductList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
@@ -150,23 +151,21 @@ App.classes.ProductList = function(element) { //описываем ф-цию к�
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
 		$root: $root,//в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
-		$navItem: $('[data-category]'),
+		$navItem: $('[data-id]'),
 		$window: $(window)
 	};
 
-	this.category = null;
+	this.category = App.instances.Nav[0].category;
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
 //instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
-	this.attachEvents();
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.ProductList.prototype.init = function() {//запись в прототип этого метода
-	this.getProducts();
-};
-
-App.classes.ProductList.prototype.attachEvents = function() {
-
-	this.elements.$window.on('click', this.elements.navItem, this.getCategory.bind(this));
+	if (!App.data.products) {
+		this.getProducts();
+	} else {
+		this.getCurrentProducts(App.data.products);
+	}
 };
 
 App.classes.ProductList.prototype.getCategory = function(event) {
@@ -182,6 +181,7 @@ App.classes.ProductList.prototype.getProducts = function() {
 		dataType: 'json',
 		method: 'GET',
 		success: function(data) {
+			App.data.products = data;
 			_this.getCurrentProducts(data);
 		},
 		error: function(jqXHR) {
@@ -191,20 +191,18 @@ App.classes.ProductList.prototype.getProducts = function() {
 };
 
 App.classes.ProductList.prototype.getCurrentProducts = function(data) {
-	this.data = data;
 	var _this = this;
 
-	var data = {};
+	var filtered = {};
 
-	data.items = this.data.items.filter(function(product) {
-		console.log(product.category, _this.category);
+	filtered.items = data.items.filter(function(product) {
 		return product.category.toLowerCase() == _this.category.toLowerCase();
 	});
 
-	if(data.items.length) {
-		this.render(data);
+	if (filtered.items.length) {
+		this.render(filtered);
 	} else {
-		this.render(data, false, true);
+		this.render(filtered, false, true);
 	}
 };
 
@@ -227,7 +225,36 @@ var App = App || {};//создаем глобальную переменную. 
 
 App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
 
+App.classes = App.classes || {};
+
+App.classes.mainSlider = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
+	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
+	//console.log(element);
+	//console.log($root);
+	//this ссылка на instance(объект созданный на основе функции конструткор)
+	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
+	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
+		$root: $root //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
+	};
+	//console.log(this.elements.$root);
+	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
+//instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
+};
+//метод init используется для того, чтобы вызывать другие методы 
+App.classes.mainSlider.prototype.init = function() {//запись в прототип этого метода
+	this.slider();
+}
+
+App.classes.mainSlider.prototype.slider = function() {
+	this.elements.$root.slick();
+};
+
+var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+
+App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+
 App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
+App.data = {};
 
 //в App.classes будут храниться все классы, те классы это функции конструкторы и их прототипы
 
@@ -236,7 +263,8 @@ App.classes.SpecialList = function(element) { //описываем ф-цию к�
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
 		$root: $root,
-		$window: $(window) //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
+		$window: $(window)
+		 //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
 	};
 	//console.log(this.elements.$root);
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
@@ -244,7 +272,11 @@ App.classes.SpecialList = function(element) { //описываем ф-цию к�
 };
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.SpecialList.prototype.init = function() {//запись в прототип этого метода
- 	this.getProducts();
+ 	if (!App.data.products) {
+ 		this.getProducts();
+ 	} else {
+ 		this.render(App.data.products);
+ 	}
 };
 
 App.classes.SpecialList.prototype.getProducts = function() {
@@ -256,8 +288,8 @@ App.classes.SpecialList.prototype.getProducts = function() {
 		dataType: 'json',
 		method: 'GET',
 		success: function(data) {
+			App.data.products = data;
 			_this.render(data);
-			// _this.elements.$window.trigger('getProducts', data);
 
 		},
 		error: function(jqXHR) {
@@ -277,48 +309,44 @@ App.classes.SpecialList.prototype.render = function(data, isError) {
 		template = App.templates['special-list'](data);
 		this.elements.$root.html(template);
 		this.carusel();
+		this.attachEvents();
+		this.elements.$root.find('.slick-arrow').fadeOut();
 	}
 };
 
 App.classes.SpecialList.prototype.carusel = function() {
 	this.elements.$root.slick({
-	  dots: true,
-	  infinite: false,
-	  speed: 300,
-	  slidesToShow: 4,
-	  slidesToScroll: 4,
-	  responsive: [
-	    {
-	      breakpoint: 1024,
-	      settings: {
-	        slidesToShow: 3,
-	        slidesToScroll: 3,
-	        infinite: true,
-	        dots: true
-	      }
-	    },
-	    {
-	      breakpoint: 600,
-	      settings: {
-	        slidesToShow: 2,
-	        slidesToScroll: 2
-	      }
-	    },
-	    {
-	      breakpoint: 480,
-	      settings: {
-	        slidesToShow: 1,
-	        slidesToScroll: 1
-	      }
-	    }
-	    // You can unslick at a given breakpoint now by adding:
-	    // settings: "unslick"
-	    // instead of a settings object
-	  ]
+	 lazyLoad: 'ondemand',
+	 slidesToShow: 4,
+	 slidesToScroll: 1
 	});
-}
+};
+
+App.classes.SpecialList.prototype.attachEvents = function() {
+	this.elements.$root.on('mouseenter mouseleave', this.fadeOut.bind(this));
+};
+
+App.classes.SpecialList.prototype.fadeOut = function() {
+	this.elements.$root.find('.slick-arrow').fadeToggle();
+};
 
 
+
+
+
+
+
+
+
+
+
+
+
+var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+
+App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+
+App.classes = App.classes || {};
 
 App.classes.Template = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
