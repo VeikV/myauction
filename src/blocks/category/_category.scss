@@ -1,3 +1,7 @@
+.category__link {
+	display: block;
+}
+
 .category-block {
 	@include flex-grid-row;
 	@include flex-align(justify, stretch);
