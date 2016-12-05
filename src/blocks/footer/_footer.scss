@@ -2,11 +2,12 @@
 	background: #222222;
 	padding: 60px 0;
 	color: #fff;
-
+	flex-shrink: 0;
 }
+
 .footer__content {
 	@include flex-grid-row;
-	@include flex-align(spaced, stretch);
+	@include flex-align(justify, middle);
 	opacity: .5;
 }
 

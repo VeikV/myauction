@@ -10,16 +10,15 @@ App.data = {};
 App.classes.SpecialList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 	//this ссылка на instance(объект созданный на основе функции конструткор)
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
-	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
+	this.elements = {
 		$root: $root,
 		$window: $(window)
-		 //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
 	};
-	//console.log(this.elements.$root);
+
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
 //instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
 };
-//метод init используется для того, чтобы вызывать другие методы 
+
 App.classes.SpecialList.prototype.init = function() {//запись в прототип этого метода
  	if (!App.data.products) {
  		this.getProducts();
@@ -43,7 +42,6 @@ App.classes.SpecialList.prototype.getProducts = function() {
 		},
 		error: function(jqXHR) {
 			_this.render(jqXHR, true);
-			// _this.elements.$window.trigger('getProducts', {isError: true, status: jqXHR.status, statusText: jqXHR.statusText});
 		}
 	});
 };
@@ -67,7 +65,8 @@ App.classes.SpecialList.prototype.carusel = function() {
 	this.elements.$root.slick({
 	 lazyLoad: 'ondemand',
 	 slidesToShow: 4,
-	 slidesToScroll: 1
+	 slidesToScroll: 1,
+	 variableWidth: true
 	});
 };
 

@@ -1,12 +1,21 @@
 .product {
 	font-family: 'helveticaneuecyrroman', sans-serif;
 	display: inline-block;
+}
+
+.product__title-block {
+	padding: 17px;
 	position: relative;
 }
 
-.product__title {
+.product__title-link {
 	font-size: 23px;
 	color: #3f3f3f;
+	line-height: 1;
+}
+
+.product__title {
+	margin-bottom: 4px;
 }
 
 .product__category {
@@ -14,15 +23,17 @@
 	font-size: 13px;
 	color: #6f6f6f;
 	text-transform: uppercase;
+	line-height: 1;
+	margin-bottom: 4px;
 }
 
 .product__add-to-cart {
-	width: 15px;
-	height: 15px;
 	position: absolute;
-	right: 40px;
-	bottom: 72px;
+	display: inline-block;
 	font-size: 30px;
+	top: 0;
+	right: 17px;
+	z-index: 998;
 }
 
 .product__add-to-cart-link {
@@ -32,6 +43,7 @@
 
 .product__price {
 	font-size: 17px;
+	line-height: 1;
 }
 
 

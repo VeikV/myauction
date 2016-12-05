@@ -1,10 +1,15 @@
 .header {
-	@include flex-grid-row;
-	@include flex-align(justify, middle);
 	padding: 25px 0;
 	background: #fff;
+	flex-shrink: 0;
+}
+
+.header-wrap {
+	@include flex-grid-row;
+	@include flex-align(justify);
 }
 
 .header__side_right {
 	@include flex;
+	margin-top: 5px;
 }

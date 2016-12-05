@@ -35,12 +35,11 @@
 
 .search__btn {
 	display: inline-block;
-    position: relative;
-    right: 5px;
-    top: 4px;
+    top: 0px;
     width: 28px;
     height: 28px;
     transition: all 250ms;
+    margin-right: 10px;
 }
 
 .search__form.active .search__btn {

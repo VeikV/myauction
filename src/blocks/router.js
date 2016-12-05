@@ -16,6 +16,13 @@ setTimeout(function() {//создает ассинхронный поток ко
 		init();
 	});
 
+	$.router.add('/myauction/build/test', function() {
+		var html = App.templates['test']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+
+		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		init();
+	});
+
 	var category;
 
 	$('.nav__item-link_category').each(function(index, item) {
