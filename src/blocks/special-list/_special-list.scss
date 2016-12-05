@@ -46,32 +46,5 @@
 	z-index: 996;
 }
 
-.special-list__title{
-    font-family: 'helveticaneuecyrroman', sans-serif;
-    color: #3f3f3f;
-    font-size: 41px;
-    text-transform: uppercase;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-.special-list__description{
-    font-family: 'helveticaneuecyrlight', sans-serif;
-    color: #9b9b9b;
-    font-size: 16px;
-    text-transform: uppercase;
-    line-height: 1;
-    display: inline-block;
-
-    &:after {
-        content: "";
-        display: block;
-        height: 1px;
-        width: 20%;
-        background-color: #9b9b9b;
-        margin-top: 5px;
-    }
-}
-
 
 

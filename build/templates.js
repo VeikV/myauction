@@ -75,8 +75,11 @@ this["App"]["templates"]["test"] = Handlebars.template({"compiler":[7,">= 4.0.0"
   return ((stack1 = container.invokePartial(partials.test,depth0,{"name":"test","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 },"usePartial":true,"useData":true});
 Handlebars.registerPartial("special-list-component", Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"special-list special-list_text\">\r\n	<div class=\"special-list__title\">Trending</div>\r\n	<div class=\"special-list__description\">Some trendy shit</div>\r\n</div>\r\n<div data-components=\"SpecialList\" class=\"special-list\"></div>";
-},"useData":true}));
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["special-list-text"],depth0,{"name":"special-list-text","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "<div data-components=\"SpecialList\" class=\"special-list\"></div>";
+},"usePartial":true,"useData":true}));
 this["App"]["templates"]["special-list"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = "";
 
@@ -93,6 +96,9 @@ this["App"]["templates"]["special-list"] = Handlebars.template({"1":function(con
 
   return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.items : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"usePartial":true,"useData":true});
+Handlebars.registerPartial("special-list-text", Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"special-list special-list_text\">\r\n	<div class=\"special-list__title\">Trending</div>\r\n	<div class=\"special-list__description\">Some trendy shit</div>\r\n</div>";
+},"useData":true}));
 Handlebars.registerPartial("test", Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
