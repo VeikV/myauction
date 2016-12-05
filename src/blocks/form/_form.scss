@@ -1,0 +1,45 @@
+.form__wrapper {
+	@include flex-grid-row;
+}
+
+.form__label {
+	font-family: 'helveticaneuecyrbold', sans-serif;
+	color: #3f3f3f;
+	font-size: 16px;
+}
+
+.form__input::-webkit-input-placeholder {
+  font-family: 'helveticaneuecyrroman', sans-serif;
+  color: #afafaf;
+  font-size: 16px;
+}
+
+.form__input {
+	border-color: rgb(238, 238, 238)!important;
+	background-color: #fff!important;
+	box-shadow: none!important;
+}
+
+.form__input::-moz-placeholder {
+  font-family: 'helveticaneuecyrroman', sans-serif;
+  color: #afafaf;
+  font-size: 16px;
+}
+
+.form__textarea {
+	height: 100%;
+	min-height: 205px;
+}
+
+.form__col {
+	@include flex-grid-column(6, 0);
+}
+
+.form__col.form__col_right {
+	padding-left: 38px;
+}
+
+.form__submit {
+	@include flex;
+  	@include flex-align(right);
+}

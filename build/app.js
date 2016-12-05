@@ -16,6 +16,13 @@ setTimeout(function() {//создает ассинхронный поток ко
 		init();
 	});
 
+	$.router.add('/myauction/build/test', function() {
+		var html = App.templates['test']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+
+		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		init();
+	});
+
 	var category;
 
 	$('.nav__item-link_category').each(function(index, item) {
@@ -90,8 +97,6 @@ App.classes = App.classes || {};//создаем второе св-во объе
 
 App.classes.Nav = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
-	//console.log(element);
-	//console.log($root);
 	//this ссылка на instance(объект созданный на основе функции конструткор)
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
@@ -122,8 +127,13 @@ App.classes.Nav.prototype.getUrl = function(event) {
 	var $current = $(event.target);
 	$current = $current.is('.nav__item-link, .category__link') ? $current : $current.closest('.nav__item-link, .category__link');
 	var id = $current.data('id');
-	console.log($current);
 	var currentUrl = this.url + id;
+
+	this.elements.$link.removeClass('active');
+
+	if(!this.elements.$link.hasClass('active')) {
+		$current.addClass('active');
+	}
 
 	this.category = id;
 
@@ -306,10 +316,15 @@ App.classes.mainSlider = function(element) { //описываем ф-цию ко
 //метод init используется для того, чтобы вызывать другие методы 
 App.classes.mainSlider.prototype.init = function() {//запись в прототип этого метода
 	this.slider();
-}
+};
 
 App.classes.mainSlider.prototype.slider = function() {
-	this.elements.$root.slick();
+	this.elements.$root.slick({
+		autoplay: true,
+  		autoplaySpeed: 2500,
+  		fade: true,
+  		cssEase: 'linear'
+	});
 };
 
 var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
@@ -324,16 +339,15 @@ App.data = {};
 App.classes.SpecialList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 	//this ссылка на instance(объект созданный на основе функции конструткор)
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
-	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
+	this.elements = {
 		$root: $root,
 		$window: $(window)
-		 //в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
 	};
-	//console.log(this.elements.$root);
+
 	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
 //instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
 };
-//метод init используется для того, чтобы вызывать другие методы 
+
 App.classes.SpecialList.prototype.init = function() {//запись в прототип этого метода
  	if (!App.data.products) {
  		this.getProducts();
@@ -357,7 +371,6 @@ App.classes.SpecialList.prototype.getProducts = function() {
 		},
 		error: function(jqXHR) {
 			_this.render(jqXHR, true);
-			// _this.elements.$window.trigger('getProducts', {isError: true, status: jqXHR.status, statusText: jqXHR.statusText});
 		}
 	});
 };
@@ -381,7 +394,8 @@ App.classes.SpecialList.prototype.carusel = function() {
 	this.elements.$root.slick({
 	 lazyLoad: 'ondemand',
 	 slidesToShow: 4,
-	 slidesToScroll: 1
+	 slidesToScroll: 1,
+	 variableWidth: true
 	});
 };
 
@@ -413,8 +427,6 @@ App.classes = App.classes || {};
 
 App.classes.Template = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
 	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
-	//console.log(element);
-	//console.log($root);
 	//this ссылка на instance(объект созданный на основе функции конструткор)
 	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
 	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
@@ -428,3 +440,140 @@ App.classes.Template = function(element) { //описываем ф-цию кон
 App.classes.Template.prototype.init = function() {//запись в прототип этого метода
 
 }
+var App = App || {};
+
+App.instances = App.instances || {};
+
+App.classes = App.classes || {};
+
+App.data = {};
+console.log(App.data);
+
+
+App.classes.Test = function(element) {
+	var $root = $(element);
+	this.elements = { 
+		$root: $root,
+		$table: $root.find('.table'),
+		$tableRow: $root.find('.table__row'),
+		$tableCell: $root.find('.table__cell'),
+		$button: $root.find('.table__button'),
+		$window: $(window)
+	};
+
+	this.updateHeight = _.throttle(this.updateHeight.bind(this), 200);
+	this.toggleTableRowColor = this.toggleTableRowColor.bind(this);
+	this.toggleTableView = this.toggleTableView.bind(this);
+
+	this.options = {
+		allRowsAmount: 5,
+		visibleRowsAmount: 3
+	};
+
+	this.data = {};
+
+	this.modifiers = {
+		visibleTable: 'table_visible',
+		coloredTableCell: 'table__cell_colored'
+	};
+
+	this.init();
+	this.attachEvents();
+};
+
+App.classes.Test.prototype.init = function() {
+	this.updateHeight();
+	this.requestTableText();
+};
+
+App.classes.Test.prototype.attachEvents = function() {
+	this.elements.$button.on('click', this.toggleTableView);
+	this.elements.$window.on('resize', this.updateHeight);
+	this.elements.$table.on('click', this.elements.$tableRow, this.toggleTableRowColor);
+};
+
+App.classes.Test.prototype.toggleTableView = function(event) {
+	this.elements.$table.toggleClass(this.modifiers.visibleTable);
+
+	this.setTableHeight();
+};
+
+App.classes.Test.prototype.toggleTableRowColor = function(event) {
+	var $current = $(event.target);
+	
+	$current.toggleClass(this.modifiers.coloredTableCell);
+
+	if ($current.hasClass(this.modifiers.coloredTableCell)) {
+		$current.css("background-color", "red");
+	} else {
+		$current.css("background-color", "inherit");
+	}
+};
+
+App.classes.Test.prototype.updateHeight = function() {
+	var _this = this;
+	this.data.visibleTableHeight = 0;
+	this.data.tableHeight = 0;
+
+	this.elements.$tableRow.each(function ( index, row ) {
+		var rowHeight = $(row).height();
+
+		if (index <= (_this.options.visibleRowsAmount - 1)) {
+			_this.data.visibleTableHeight += rowHeight;
+			_this.data.tableHeight = _this.data.visibleTableHeight;
+
+		} else {
+			_this.data.tableHeight += rowHeight;
+		}
+	});
+	this.elements.$table.height(this.data.visibleTableHeight);
+	this.setTableHeight();
+};
+
+App.classes.Test.prototype.setTableHeight = function() {
+	if (this.elements.$table.hasClass(this.modifiers.visibleTable)) {
+		this.elements.$table.animate({
+			'height':this.data.tableHeight
+		}, 500);
+	} else {
+		this.elements.$table.animate({
+			'height': this.data.visibleTableHeight
+		}, 500);
+	}
+};
+
+App.classes.Test.prototype.requestTableText = function() {
+	var _this = this;
+	$.ajax({
+		url: '/Myauction/services/test.json',
+		dataType: 'json',
+		method: 'GET',
+		success: function(data) {
+			App.data.tableText = data;
+			console.log(App.data.tableText);
+		},
+		error: function(jqXHR) {
+			
+		}
+	});
+};
+
+// App.classes.Test.prototype.render = function(data, isError) {
+// 	var TableCellText;
+
+// 	if (isError) {//если isError будет true, то будет выполняться это, если нет, то другая часть услоной конструкции
+// 		TableCellText = App.templates.error(data);// здесь используется hbs шаблон error
+// 		this.elements.$root.html(TableCellText);//html метод jquery объекта. Он вставляет, как html переданный ему параметр
+// 	} else {
+// 		 TableCellText = App.templates['test'](data);
+// 		 this.elements.$tableCell.html(TableCellText);
+// 	}
+// };
+
+
+
+
+
+
+
+

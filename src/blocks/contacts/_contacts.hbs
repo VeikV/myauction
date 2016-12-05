@@ -1,29 +1,7 @@
 <div data-components="Contacts"  class="contact">
-  <h2 class="contact__title">We need your feedback</h2>
-  <div class="contact__form">
-  	<form class="form">
-		  <div class="form__wrapper">
-		    <div class="form__col">
-		      <label class="form__label">Name
-		        <input class="form__input"  type="text" placeholder="How do they call you?...">
-		      </label>
-		   		<label class="form__label">Email
-		        <input class="form__input"  type="text" placeholder="It will be great if you have some shit like that...">
-		      </label>
-		   		<label class="form__label">Subject
-		        <input class="form__input" type="text" placeholder="Better if you have it...">
-		      </label>
-		    </div>
-		    <div class="form__col">
-			    <label class="form__label"> Message
-					  <textarea class="form__input form__textarea"  placeholder="I need my money back you fucking fucks. Or my race will declare war to yours..."></textarea>
-					</label>
-					<div class="input-group-button">
-    				<input type="submit" class="button" value="Submit">
-  				</div>
-		    </div>
-		  </div>
-		</form>
+	<div class="contacts-wrapper">
+	  <h2 class="contact__title">We need your feedback</h2>
+	  <div class="contact__form">{{>form}}</div>
 	</div>
 </div>
 <div class="contact-map">
@@ -41,7 +19,7 @@
 		</div>
 	</div>
 	<div class="contact-map__nav">
-		<div><img src="../src/images/map-nav.png"></div>
-		<div><img src="../src/images/map-line.png"></div>
+		<div class="nav-circle"><img src="../src/images/map-nav.png"></div>
+		<div class="nav-scale"><img src="../src/images/map-line.png"></div>
 	</div>
 </div>
