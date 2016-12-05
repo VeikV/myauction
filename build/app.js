@@ -318,28 +318,24 @@ App.classes.mainSlider.prototype.slider = function() {
 	});
 };
 
-var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+var App = App || {};
 
-App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+App.instances = App.instances || {};
 
-App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
-App.data = {};
+App.classes = App.classes || {};
 
-//в App.classes будут храниться все классы, те классы это функции конструкторы и их прототипы
-
-App.classes.SpecialList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
-	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 	//this ссылка на instance(объект созданный на основе функции конструткор)
-	this.data = null; //this.data это св-во instance в которое мы будем класть данные, полученные с сервера
+App.classes.SpecialList = function(element) {
+	var $root = $(element);
+	this.data = null; 
 	this.elements = {
 		$root: $root,
 		$window: $(window)
 	};
 
-	this.init();//есть цепочка прототипов, и если этот метод не существует в объекте, он берется из прототипа, и так ниже.
-//instance создается в цикле в самовызывающейся ф-ции(описано внизу стр-цы)
+	this.init();
 };
 
-App.classes.SpecialList.prototype.init = function() {//запись в прототип этого метода
+App.classes.SpecialList.prototype.init = function() {
  	if (!App.data.products) {
  		this.getProducts();
  	} else {
@@ -349,7 +345,7 @@ App.classes.SpecialList.prototype.init = function() {//запись в прот�
 
 App.classes.SpecialList.prototype.getProducts = function() {
 
-	var _this = this; //сохраняем контекст в переменную, потому что в аяксе this будет ссылаться не на instance, а на ajax объект
+	var _this = this; 
 
 	$.ajax({
 		url: '/Myauction/services/products.json',
@@ -369,9 +365,9 @@ App.classes.SpecialList.prototype.getProducts = function() {
 App.classes.SpecialList.prototype.render = function(data, isError) {
 	var template;
 
-	if (isError) {//если isError будет true, то будет выполняться это, если нет, то другая часть услоной конструкции
-		template = App.templates.error(data);// здесь используется hbs шаблон error
-		this.elements.$root.html(template);//html метод jquery объекта. Он вставляет, как html переданный ему параметр
+	if (isError) {
+		template = App.templates.error(data);
+		this.elements.$root.html(template);
 	} else {
 		template = App.templates['special-list'](data);
 		this.elements.$root.html(template);
