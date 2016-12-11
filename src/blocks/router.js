@@ -1,25 +1,23 @@
 
 
-setTimeout(function() {//создает ассинхронный поток кода, делаем для того, что бы оно работало после того, как проинициализируются все компонеты(предыдущие js файлы)
-
+setTimeout(function() {
 	$.router.add('/myauction/build/', function() {
-		var html = App.templates['index']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['index']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
-		init();//вызываем ф-цию init для того, что бы отработал код ниже.
+		$('.main').html(html);
+		init();
 	});
 
 	$.router.add('/myauction/build/contacts', function() {
-		var html = App.templates['contacts']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['contacts']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		$('.main').html(html);
 		init();
 	});
 
 	$.router.add('/myauction/build/test', function() {
-		var html = App.templates['test']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
-
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		var html = App.templates['test']();
+		$('.main').html(html);
 		init();
 	});
 
@@ -29,20 +27,20 @@ setTimeout(function() {//создает ассинхронный поток ко
 		category = $(item).attr('data-id');
 
 	$.router.add('/myauction/build/' + category, function() {
-		var html = App.templates['plp']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['plp']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		$('.main').html(html);
 		init();
 	});
 	});
 
-	$.router.go('/myauction/build/');//пишем для перехода по ссылке
-//здесь будут создаваться именно инстансы для каждого класса(функция конструктор и ее прототип) приложенияб
-	function init() {//инициализация всех компонетов
-		var components = $('[data-components]');//получаем массив эл-ов у которых есть дата атрибут data-components. $ возвращает объект в свойствах которого есть кол-ция дом элементов с дата атибутом data-components
+	$.router.go('/myauction/build/');
+
+	function init() {
+		var components = $('[data-components]');
 	
 		$.each(components, function(index, node) {
-			var modules = node.dataset.components;//смотрим значение дата-атрибута с именем компонетс
+			var modules = node.dataset.components;
 
 			modules.split(' ').forEach(function(module) {
 				App.instances[module] = App.instances[module] || [];
@@ -63,4 +61,9 @@ setTimeout(function() {//создает ассинхронный поток ко
 			});
 		})
 	}
-}, 0);//выполнится, через указанное кол-во милсек после выполнения синхронного кода
+}, 0);
+
+
+var Nav = {
+	init: function() {}
+};

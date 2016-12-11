@@ -1,25 +1,23 @@
 
 
-setTimeout(function() {//создает ассинхронный поток кода, делаем для того, что бы оно работало после того, как проинициализируются все компонеты(предыдущие js файлы)
-
+setTimeout(function() {
 	$.router.add('/myauction/build/', function() {
-		var html = App.templates['index']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['index']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
-		init();//вызываем ф-цию init для того, что бы отработал код ниже.
+		$('.main').html(html);
+		init();
 	});
 
 	$.router.add('/myauction/build/contacts', function() {
-		var html = App.templates['contacts']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['contacts']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		$('.main').html(html);
 		init();
 	});
 
 	$.router.add('/myauction/build/test', function() {
-		var html = App.templates['test']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
-
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		var html = App.templates['test']();
+		$('.main').html(html);
 		init();
 	});
 
@@ -29,20 +27,20 @@ setTimeout(function() {//создает ассинхронный поток ко
 		category = $(item).attr('data-id');
 
 	$.router.add('/myauction/build/' + category, function() {
-		var html = App.templates['plp']();//вызываем template.hbs -темплейт стр. index, в результате возвращает html
+		var html = App.templates['plp']();
 
-		$('.main').html(html);//jquery рисует разметку html c помощью метода html в .main
+		$('.main').html(html);
 		init();
 	});
 	});
 
-	$.router.go('/myauction/build/');//пишем для перехода по ссылке
-//здесь будут создаваться именно инстансы для каждого класса(функция конструктор и ее прототип) приложенияб
-	function init() {//инициализация всех компонетов
-		var components = $('[data-components]');//получаем массив эл-ов у которых есть дата атрибут data-components. $ возвращает объект в свойствах которого есть кол-ция дом элементов с дата атибутом data-components
+	$.router.go('/myauction/build/');
+
+	function init() {
+		var components = $('[data-components]');
 	
 		$.each(components, function(index, node) {
-			var modules = node.dataset.components;//смотрим значение дата-атрибута с именем компонетс
+			var modules = node.dataset.components;
 
 			modules.split(' ').forEach(function(module) {
 				App.instances[module] = App.instances[module] || [];
@@ -63,7 +61,13 @@ setTimeout(function() {//создает ассинхронный поток ко
 			});
 		})
 	}
-}, 0);//выполнится, через указанное кол-во милсек после выполнения синхронного кода
+}, 0);
+
+
+var Nav = {
+	init: function() {}
+};
+
 var App = App || {};
 
 App.instances = App.instances || {};
@@ -87,10 +91,12 @@ App.classes.Contacts.prototype.init = function() {
 var App = App || {};
 
 App.instances = App.instances || {};
+
 App.classes = App.classes || {};
 
 
 App.classes.Nav = function(element) { 
+	console.log(element);
 	var $root = $(element);
 	this.data = null; 
 
@@ -142,23 +148,24 @@ App.classes.Nav.prototype.go = function(currentUrl) {
 
 
 
-var App = App || {};//создаем глобальную переменную. Пространство имен приложения.
+var App = App || {};
 
-App.instances = App.instances || {};//создаем св-во объекта, будет хранить все инстансы. Инстансы - это объекты созданные при вызове ф-ции кнструктора со словом new
+App.instances = App.instances || {};
 
-App.classes = App.classes || {};//создаем второе св-во объекта. Будет хранить все классы(функции конструткоры и их прототипы), которые создают instances
+App.classes = App.classes || {};
 App.data = {};
 
-App.classes.ProductList = function(element) { //описываем ф-цию конструткор. Элемент каждый раз будет ссылаться на аргумент(переданное занчение при вызове ф-ции), переданный при создании конкретного instance
-	var $root = $(element);//создаем jquery объект и кладем его в переменную, на основе element для каждого instance 
-	this.elements = { //в этом св-ве мы будем хранить все элементы, с которыми мы будем работать в рамках рута
-		$root: $root,//в св-во объекта this.elements мы записывает значение переменной $root, далее мы сможем обращаться к этой переменной через this.elements.$root
+App.classes.ProductList = function(element) { 
+	var $root = $(element);
+	this.elements = { 
+		$root: $root,
 		$navItem: $('[data-id]'),
 		$window: $(window)
 	};
 
 	this.handleError = this.handleError.bind(this);
 	this.increasePage = this.increasePage.bind(this);
+	this.getCategoryProducts = this.getCategoryProducts.bind(this);
 	this.checkPositions = _.throttle(this.checkPositions.bind(this), 200);
 	this.render = this.render.bind(this);
 	this.products = {
@@ -172,15 +179,16 @@ App.classes.ProductList = function(element) { //описываем ф-цию к�
 
 $.extend(App.classes.ProductList.prototype, {
 	handleError: function(error) {
-	var template = App.templates['error'](error);
+		var template = App.templates['error'](error);
 
-	this.elements.$root.append(template)
-	this.elements.$window.off('.products')
+		this.elements.$root.append(template);
+		this.elements.$window.off('.products');
 	},
 
-	init: function() {//запись в прототип этого метода
+	init: function() {
 
 		this.requestProducts(this.page, this.products)
+			.then(this.getCategoryProducts)
 			.then(this.increasePage)
 			.then(this.render)
 			.catch(this.handleError);
@@ -221,23 +229,16 @@ $.extend(App.classes.ProductList.prototype, {
 		});
 	},
 
-	getCategory: function(event) {
-		var target = event.target;
-		this.category = $(target).data('id');
-	},
-
     getCategoryProducts: function(data) {
 		var _this = this;
 
-		this.data.items = data.items.filter(function(product) {
-			return product.category.toLowerCase() == _this.category.toLowerCase();
-		});
+		return new Promise(function(resolve, reject) {
+			_this.products.items = data.items.filter(function(product) {
+				return product.category.toLowerCase() == App.instances.Nav[0].category.toLowerCase();
+			});
 
-		if (this.data.items.length) {
-			this.render(this.data, false, false, true);
-		} else {
-			this.render(this.data, false, true);
-		}
+			resolve(_this.products);
+		});
 	},
 
 	render: function(data) {
@@ -252,6 +253,7 @@ $.extend(App.classes.ProductList.prototype, {
 		if (scrollPosition >= this.elements.$root.offset().top + this.elements.$root.height()) {
 			this.requestProducts(this.page, this.products)
 				.then(this.increasePage)
+				.then(this.getCategoryProducts)
 				.then(this.render)
 				.catch(this.handleError);
 		}
@@ -428,7 +430,7 @@ App.instances = App.instances || {};
 App.classes = App.classes || {};
 
 App.data = {};
-console.log(App.data);
+
 
 
 App.classes.Test = function(element) {

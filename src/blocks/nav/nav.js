@@ -1,10 +1,12 @@
 var App = App || {};
 
 App.instances = App.instances || {};
+
 App.classes = App.classes || {};
 
 
 App.classes.Nav = function(element) { 
+	console.log(element);
 	var $root = $(element);
 	this.data = null; 
 

@@ -1,15 +1,6 @@
 {
 	"items": [
-		{
-			"title": "Rusty",
-			"category": "Men",
-			"price": 12,
-			"currency": "$",
-			"image": "../src/images/product1.png",
-			"special": true,
-			"color": "red"
-		},
-
+		
 		{ 
 			"title": "Dusty",
 			"category": "Men",
@@ -36,6 +27,17 @@
 			"title": "Dusty",
 			"category": "Men",
 			"price": 193,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"special": true,
+			"color": "green"
+
+		},
+
+		{ 
+			"title": "Dusty",
+			"category": "Men",
+			"price": 23,
 			"currency": "$",
 			"image": "../src/images/product1.png",
 			"special": true,
@@ -82,7 +84,27 @@
 			"image": "../src/images/product1.png",
 			"special": true,
 			"color": "green"
+		},
 
+		{
+			"title": "Pres",
+			"category": "Presidents",
+			"price": 12,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"special": true,
+			"color": "red"
+		},
+
+		{
+			"title": "Hum",
+			"category": "Humanoids",
+			"price": 12,
+			"currency": "$",
+			"image": "../src/images/product1.png",
+			"special": true,
+			"color": "red"
 		}
+
 	]
 }

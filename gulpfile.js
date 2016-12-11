@@ -14,7 +14,7 @@ var declare = require('gulp-declare');
 var swig = require('gulp-swig');
 
 gulp.task('sass', function () {
- return gulp.src('./src/**/*.scss')
+ return gulp.src('./src/app.scss')
   .pipe(sourcemaps.init())
   .pipe(autoprefixer())
   .pipe(sass().on('error', sass.logError))
